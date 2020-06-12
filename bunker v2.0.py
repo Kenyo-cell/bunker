@@ -23,9 +23,10 @@ import os
 global INFO
 global WORLD
 global w
+global color
 INFO = dict()
 WORLD = dict()
-
+color = [.9, .83, .67, 1]
 w = Window
 
 
@@ -81,8 +82,10 @@ class TestApp(App):
 
                 self.add_btn = Button(text="add", on_press=self.add,
                 background_color=[0, 1, 0, 1], size_hint=(0.5, 1))
-                self.generate_bio = Button(text="generate bio", on_press=self.bio)
-                self.generate_event = Button(text="create event", on_press=self.event)
+                self.generate_bio = Button(text="generate bio", on_press=self.bio,
+                background_color=color)
+                self.generate_event = Button(text="create event", on_press=self.event,
+                background_color=color)
         
                 self.head_grid.add_widget(self.generate_bio)
                 self.head_grid.add_widget(self.generate_event)
@@ -131,25 +134,19 @@ class PlayerString(GridLayout):
                 self.lbl = PlayerLabel(self.player_name, size_hint=self.string_hint)
                 self.box.add_widget(self.lbl)
 
-                self.create_btns()
-
-        def get_name(self):
-                return self.player_name
-        
-        def add_string(self):
-                return self.box
-
-        def create_btns(self):
-                self.change_btn = Button(text="change name", on_press=self.change_name)
+                self.change_btn = Button(text="change name", on_press=self.change_name,
+                background_color=color)
                 self.delete_btn = Button(text="delete", on_press=self.remove_player, 
                 background_color=[1, 0, 0, 1], size_hint=(0.62, 1))
 
                 self.box.add_widget(self.change_btn)
                 self.box.add_widget(self.delete_btn)
 
-        def delete_btns(self):
-                self.box.remove_widget(self.change_btn)
-                self.box.remove_widget(self.delete_btn)
+        def get_name(self):
+                return self.lbl.get_player_name()
+        
+        def add_string(self):
+                return self.box
 
         def remove_player(self, inst):
                 self.root.box.remove_widget(self.box)
@@ -193,6 +190,9 @@ class PlayerLabel(BoxLayout):
                 self.lbl = Label(text=self.player_name)
 
                 self.add_widget(self.lbl)
+
+        def get_player_name(self):
+                return self.player_name
 
 if __name__ == '__main__':
         start()
